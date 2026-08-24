@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volatility Analysis Tool</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #07111f;
+      color: #eaf2ff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0b1b30;
+      border-bottom: 1px solid #183553;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      color: #4da3ff;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .dot.connected {
+      background: #22c55e;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .panel {
+      background: #0b1b30;
+      border: 1px solid #183553;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .panel h2 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #8fc7ff;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 180px 120px 120px;
+      gap: 10px;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #23476d;
+      background: #071525;
+      color: white;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #3498ff;
+    }
+
+    button {
+      cursor: pointer;
+      background: #1478d4;
+      border: none;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #0e65b6;
+    }
+
+    .disconnect {
+      background: #9f2735;
+    }
+
+    .disconnect:hover {
+      background: #7e1e2a;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      background: #071525;
+      border: 1px solid #183553;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .label {
+      color: #7f9bb8;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .digits {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .digit {
+      background: #071525;
+      border: 1px solid #183553;
+      border-radius: 8px;
+      text-align: center;
+      padding: 12px 5px;
+    }
+
+    .digit-number {
+      font-size: 20px;
+      font-weight: bold;
+      color: #4da3ff;
+    }
+
+    .digit-percent {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #a9bed3;
+    }
+
+    .bar {
+      height: 6px;
+      background: #172d45;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #3298ff;
+      width: 0%;
+      transition: width .3s;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #183553;
+    }
+
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-value {
+      font-weight: bold;
+    }
+
+    .analysis-box {
+      background: #071525;
+      border: 1px solid #183553;
+      border-radius: 10px;
+      padding: 15px;
+      line-height: 1.7;
+      color: #b8cce0;
+    }
+
+    .tick-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .tick-table th,
+    .tick-table td {
+      padding: 9px;
+      border-bottom: 1px solid #183553;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .tick-table th {
+      color: #7fafd8;
+    }
+
+    .empty {
+      color: #71879e;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #617890;
+      padding: 25px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .controls,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      main {
+        padding: 12px;
+      }
+
+      header {
+        padding: 14px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .digits {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ VOLATILITY ANALYSIS</div>
+
+  <div class="status">
+    <span id="statusDot" class="dot"></span>
+    <span id="statusText">Disconnected</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- API CONNECTION -->
+  <section class="panel">
+    <h2>API CONNECTION</h2>
+
+    <div class="controls">
+      <input
+        id="apiToken"
+        type="password"
+        placeholder="Enter your Deriv API token"
+        autocomplete="off"
+      >
+
+      <select id="symbol">
+        <option value="R_10">Volatility 10</option>
+        <option value="R_25">Volatility 25</option>
+        <option value="R_50">Volatility 50</option>
+        <option value="R_75">Volatility 75</option>
+        <option value="R_100">Volatility 100</option>
+        <option value="1HZ10V">Volatility 10 (1s)</option>
+        <option value="1HZ25V">Volatility 25 (1s)</option>
+        <option value="1HZ50V">Volatility 50 (1s)</option>
+        <option value="1HZ75V">Volatility 75 (1s)</option>
+        <option value="1HZ100V">Volatility 100 (1s)</option>
+      </select>
+
+      <button onclick="connect()">CONNECT</button>
+
+      <button class="disconnect" onclick="disconnect()">DISCONNECT</button>
+    </div>
+
+    <p style="margin-top:10px;color:#71879e;font-size:12px;">
+      Your token is entered locally in the browser and is not included in this source code.
+    </p>
+  </section>
+
+
+  <!-- MARKET SUMMARY -->
+  <section class="panel">
+    <h2>LIVE MARKET</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="label">MARKET</div>
+        <div class="value" id="marketName">Volatility 10</div>
+      </div>
+
+      <div class="card">
+        <div class="label">CURRENT PRICE</div>
+        <div class="value" id="price">—</div>
+      </div>
+
+      <div class="card">
+        <div class="
