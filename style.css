@@ -1,0 +1,300 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #06101d;
+  color: #eaf3ff;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: #0a192b;
+  border-bottom: 1px solid #1a3857;
+  padding: 18px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar h1 {
+  font-size: 21px;
+  color: #48a5ff;
+}
+
+.topbar span {
+  color: #7891aa;
+  font-size: 12px;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+#statusDot.connected {
+  background: #22c55e;
+}
+
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 20px;
+}
+
+.panel {
+  background: #0a192b;
+  border: 1px solid #1a3857;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.panel h2 {
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: #8fc7ff;
+}
+
+.connection-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 130px 130px;
+  gap: 10px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 8px;
+  border: 1px solid #244968;
+
+  background: #071423;
+  color: white;
+
+  font-size: 14px;
+}
+
+button {
+  background: #167bd4;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1065b0;
+}
+
+button.danger {
+  background: #a52c3b;
+}
+
+button.danger:hover {
+  background: #84222f;
+}
+
+button.secondary {
+  background: #17314c;
+}
+
+.small-text {
+  color: #657e98;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.card {
+  background: #071423;
+  border: 1px solid #193752;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.card span {
+  display: block;
+  color: #7189a3;
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+.card strong {
+  font-size: 23px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.digit-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.digit-card {
+  background: #071423;
+  border: 1px solid #193752;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.digit-number {
+  font-size: 20px;
+  color: #49a5ff;
+  font-weight: bold;
+}
+
+.digit-percent {
+  color: #8da6be;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.progress {
+  height: 7px;
+  background: #172b40;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0 16px;
+}
+
+.progress div {
+  width: 0%;
+  height: 100%;
+  background: #258ee4;
+  transition: width .3s;
+}
+
+.stat-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #193752;
+}
+
+.analysis {
+  background: #071423;
+  border-radius: 9px;
+  padding: 13px;
+}
+
+.analysis p {
+  padding: 7px 0;
+  color: #8ea7bf;
+}
+
+.analysis strong {
+  color: white;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-header button {
+  width: 90px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 11px;
+  text-align: left;
+  border-bottom: 1px solid #193752;
+  font-size: 13px;
+}
+
+th {
+  color: #789abc;
+}
+
+.empty {
+  text-align: center;
+  color: #667f98;
+  padding: 30px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #5f7690;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+
+  .connection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  main {
+    padding: 12px;
+  }
+
+  .topbar {
+    padding: 14px;
+  }
+
+  .topbar h1 {
+    font-size: 17px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .card strong {
+    font-size: 18px;
+  }
+
+}
